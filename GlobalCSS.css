@@ -21,7 +21,7 @@
 
 	/* За съвместимост с браузъра Safari */
 }
-
++
 .ed-element.preset-menu-v2-williams {
 	@include menu-v2(
 		$menu-wrapper-background: transparent, 
@@ -1321,4 +1321,98 @@
 		$arrow-position: (inside, null, null), 
 		$dots-color-active: $color-user-1
 	);
+}
+
+/* ==========================================================
+   МОБИЛНО МЕНЮ (ПОПРАВЕНО) - FULLSCREEN, BLUR, ЛОГО И "Х"
+   ========================================================== */
+@media screen and (max-width: 991px) {
+    
+    /* 1. Хедър: Контейнерът, който държи логото и бутона */
+    .preset-menu-v2-williams .menu-wrapper {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        position: relative !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        padding: 15px 20px !important; 
+    }
+
+    /* Позициониране на логото идеално в средата */
+    .preset-menu-v2-williams .menu-wrapper .ed-logo,
+    .preset-menu-v2-williams .menu-wrapper .logo {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        z-index: 10000 !important;
+    }
+
+    /* Избутваме хамбургер бутона плътно вдясно */
+    .preset-menu-v2-williams .menu-wrapper .menu-trigger {
+        margin-left: auto !important;
+        position: relative !important;
+        z-index: 10001 !important; /* Най-отгоре, за да се цъка винаги */
+    }
+
+    /* 2. Меню Контейнер (Fullscreen + Blur Glassmorphism) */
+    .preset-menu-v2-williams .ed-menu {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: rgba(0, 0, 0, 0.45) !important; /* Прозрачен тъмен фон */
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+        
+        /* Подредба на линковете в центъра */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        
+        /* Скрито по подразбиране */
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-20px) !important;
+        transition: all 0.4s ease-in-out !important;
+        z-index: 9998 !important; /* Под бутона и логото */
+    }
+
+    /* 3. Отваряне на менюто */
+    body.open-menu .preset-menu-v2-williams .ed-menu,
+    .preset-menu-v2-williams .ed-menu.open {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+
+    /* Разстояние между самите линкове */
+    .preset-menu-v2-williams .ed-menu > li {
+        margin: 15px 0 !important;
+    }
+
+    /* 4. Анимация на Хамбургер към "Х" */
+    .preset-menu-v2-williams .menu-trigger span,
+    .preset-menu-v2-williams .menu-trigger div {
+        transition: all 0.3s ease-in-out !important;
+        transform-origin: center !important;
+    }
+
+    /* Местим чертичките, за да станат на Х, когато менюто е отворено */
+    .preset-menu-v2-williams .menu-trigger.open span:nth-child(1),
+    .preset-menu-v2-williams .menu-trigger.open div:nth-child(1) {
+        transform: translateY(8px) rotate(45deg) !important;
+    }
+    .preset-menu-v2-williams .menu-trigger.open span:nth-child(2),
+    .preset-menu-v2-williams .menu-trigger.open div:nth-child(2) {
+        opacity: 0 !important; /* Средната черта изчезва */
+    }
+    .preset-menu-v2-williams .menu-trigger.open span:nth-child(3),
+    .preset-menu-v2-williams .menu-trigger.open div:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg) !important;
+    }
 }
